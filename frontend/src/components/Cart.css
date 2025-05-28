@@ -1,0 +1,128 @@
+.cart-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-list {
+  margin-top: 20px;
+}
+
+.cart-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info strong {
+  display: block;
+  font-size: 16px;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-actions input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.remove-btn {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #e60000;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.address-form, .payment-options {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.address-form input {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+.payment-options ul {
+  list-style: none;
+  padding: 0;
+}
+
+.payment-options li {
+  margin: 10px 0;
+}
+
+.payment-btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-btn:hover {
+  background-color: #0056b3;
+}
+
+.buy-now-btn {
+  margin-left: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy-now-btn:hover {
+  background-color: #218838;
+}
+ 
+.enter-address-btn{
+    margin-left: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}

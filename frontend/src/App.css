@@ -1,0 +1,10 @@
+.project img {
+  width: 100%;
+  border-radius: 10px;
+  height: auto;
+  object-fit: cover;
+}
+
+html {
+  scroll-behavior: smooth;
+}

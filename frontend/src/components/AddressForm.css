@@ -1,0 +1,91 @@
+.address-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+.address-form input {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+.payment-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.payment-section h3, .payment-section h4 {
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.payment-section p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.payment-section h4 {
+  font-size: 20px;
+  margin-top: 15px;
+  color: #1d4ed8;
+}
+
+.razorpay-button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #528ff0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.razorpay-button:hover {
+  background-color: #3a70cc;
+}
+
+@media screen and (max-width: 600px) {
+  .payment-section {
+    padding: 15px;
+  }
+
+  .razorpay-button {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.payment-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  color: #444;
+}
+
+.payment-table .total-row td {
+  border-top: 2px solid #222;
+  font-weight: bold;
+  color: #1d4ed8;
+}

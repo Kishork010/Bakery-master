@@ -1,0 +1,108 @@
+.booking-form {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  background-color: #fff8f4;
+  font-family: Arial, sans-serif;
+}
+
+.booking-form h2 {
+  text-align: center;
+  color: #d66b6b;
+}
+
+.booking-form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.booking-form button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #ff8c94;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.booking-form button:hover {
+  background-color: #ff6f79;
+}
+
+.preview {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #fff0ea;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.preview h3 {
+  color: #d95b5b;
+  margin-bottom: 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-group button {
+  width: 48%;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff7f7f; /* Optional for pink styling */
+}
+
+.checkbox-group label {
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+}

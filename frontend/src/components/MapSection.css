@@ -1,0 +1,29 @@
+.map-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    min-height: 350px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .info-box {
+    flex: 1;
+    min-width: 250px;
+    padding: 20px;
+    background: #fdfdfd;
+    font-family: Arial, sans-serif;
+  }
+  
+  .info-box h2 {
+    margin-top: 0;
+    color: #b04f4f;
+  }
+  
+  .map-box {
+    flex: 2; /* More than half */
+    min-height: 350px;
+  }
+  

@@ -1,0 +1,28 @@
+.nav-bar {
+    background-color: #fff8f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    color: #3e2723;
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #5d4037;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #d84315;
+  }
+  

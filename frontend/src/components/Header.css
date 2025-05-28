@@ -1,0 +1,86 @@
+/* General header styles */
+.header {
+  padding: 0px 5px; /* Reduced vertical padding */
+  box-shadow: 0 2px 4px rgba(217, 166, 121, 0.3);
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* Top section: left logo/name and right logo */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left logo and name */
+.logo-bakery-name {
+  display: flex;
+  align-items: center;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px; 
+}
+
+.logo {
+  width: 140px;
+  height: 150px;
+  
+}
+
+.logo1 {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.logo-bakery-name {
+  display: flex;
+  align-items: center;
+}
+
+.bakery-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.bakery-name {
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.bakery-slogan {
+  font-size: 20px;
+  font-style: italic;
+  color: #555;
+  margin-left: 10px;
+}
+
+
+/* Right logo styling */
+.right-logo img {
+  width: 110px;
+  height: 110px;
+}
+
+/* Navigation bar */
+.nav-links {
+  margin-top: 0px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 25px;
+  color: #5c3a21;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ff8c94; /* Sweet pink highlight */
+}
