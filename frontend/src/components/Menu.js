@@ -5,8 +5,7 @@ import './Menu.css';
 const images = require.context('../assets/images', false, /\.(png|jpe?g|svg)$/);
 
 function Menu({ addToCart }) {
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
+ const [popup, setPopup] = useState(null);
 
   const items = [
     {
@@ -101,42 +100,38 @@ function Menu({ addToCart }) {
     },
   ];
 
-  return (
-    <div className="menu-container" data-aos="fade-up">
-      {/* Popup message */}
-      {showPopup && (
-  <div className="success-alert">
-    <span className="alert-icon">✔</span> Item added successfully
-  </div>
-)}
+const handleAddToCart = (item) => {
+  const added = addToCart(item);  // your addToCart function should return true/false
+  if (added) {
+    setPopup({ message: "Item added successfully", type: "success" });
+  } else {
+    setPopup({ message: "Item already added", type: "error" });
+  }
 
-      
+  setTimeout(() => setPopup(null), 2000);
+};
+
+return (
+  <>
+    {popup && (
+      <div className={`alert ${popup.type}`}>
+        <span className="alert-icon">{popup.type === "success" ? "✔" : "⚠"}</span>
+        {popup.message}
+      </div>
+    )}
+
+    <div className="menu-container" data-aos="fade-up">
       {items.map((category) => (
         <div key={category.category}>
           <h2>{category.category}</h2>
           <div className="menu-items">
             {category.items.map((item) => (
               <div key={item.name} className="menu-item">
-                <img
-                  src={images(`./${item.image}`)}
-                  alt={item.name}
-                  className="item-image"
-                />
+                <img src={images(`./${item.image}`)} alt={item.name} className="item-image" />
                 <div className="item-details">
                   <h3>{item.name}</h3>
                   <p>{item.price}</p>
-                  <button
-                    onClick={() => {
-                      setSelectedItems([...selectedItems, item]);
-                      addToCart(item);
-                      setShowPopup(true);
-                      setTimeout(() => {
-                        setShowPopup(false);
-                      }, 2000); // Popup disappears after 2 seconds
-                    }}
-                  >
-                    Add to Cart
-                  </button>
+                  <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
                 </div>
               </div>
             ))}
@@ -144,7 +139,9 @@ function Menu({ addToCart }) {
         </div>
       ))}
     </div>
-  );
+  </>
+);
+
 }
 
 export default Menu;

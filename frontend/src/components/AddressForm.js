@@ -1,158 +1,331 @@
-import React, { useState } from 'react';
-import './AddressForm.css';
-import { getCartTotal } from './Cart'; // Assuming you have a function to get the cart total
-import { useNavigate } from 'react-router-dom';
+// AddressForm.js
+import React, { useState } from "react";
+import "./AddressForm.css";
+import { useNavigate } from "react-router-dom";
+
+// Label component with optional red star
+const Label = ({ htmlFor, children, required }) => (
+  <label htmlFor={htmlFor}>
+    {children} {required && <span className="required-star">*</span>}
+  </label>
+);
 
 function AddressForm() {
   const navigate = useNavigate();
-  const totalAmount = parseFloat(localStorage.getItem('cartTotal')) || 0;
+  const totalAmount = parseFloat(localStorage.getItem("cartTotal")) || 0;
   const gst = totalAmount * 0.18;
   const delivery = 50;
   const grandTotal = totalAmount + gst + delivery;
 
   const [showPayment, setShowPayment] = useState(false);
   const [formData, setFormData] = useState({
-    name: '', mobile: '', email: '',
-    flat: '', area: '', landmark: '', pincode: '',
-    city: '', taluka: '', dist: '', state: '',
+    name: "",
+    mobile: "",
+    email: "",
+    flat: "",
+    area: "",
+    landmark: "",
+    pincode: "",
+    city: "",
+    taluka: "",
+    dist: "",
+    state: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handlePayment = async () => {
-  const response = await fetch("http://localhost:5000/create-order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: grandTotal })
-  });
-
-  const order = await response.json();
-
-  const options = {
-    key: "YOUR_KEY_ID", // Replace with your Razorpay Key ID
-    amount: order.amount,
-    currency: "INR",
-    name: "My Store",
-    description: "Order Payment",
-    order_id: order.id,
-    handler: function (response) {
-      alert("Payment successful!");
-      console.log(response);
-      navigate("/success");
-    },
-    prefill: {
-      name: formData.name,
-      email: formData.email,
-      contact: formData.mobile
-    },
-    theme: {
-      color: "#3399cc"
-    }
+  const isFormValid = () => {
+    // Only validate required fields
+    const requiredFields = [
+      "name",
+      "mobile",
+      "email",
+      "pincode",
+      "city",
+      "state",
+    ];
+    return requiredFields.every((field) => formData[field]?.trim() !== "");
   };
 
-  const rzp = new window.Razorpay(options);
-  rzp.open();
-};
+  const handlePayment = async () => {
+    if (!isFormValid()) {
+      alert("Please fill in all required address details.");
+      return;
+    }
+
+    const customer = {
+      name: formData.name,
+      email: formData.email,
+      mobile: formData.mobile,
+    };
+
+    const response = await fetch("http://localhost:5000/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: grandTotal, customer }),
+    });
+
+    const order = await response.json();
+
+    const options = {
+      key: "rzp_test_9QPT4JCe3g2LJn",
+      amount: order.amount * 100,
+      currency: "INR",
+      name: "My Store",
+      description: "Order Payment",
+      order_id: order.id,
+      handler: async function (response) {
+        const verifyRes = await fetch("http://localhost:5000/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(response),
+        });
+
+        const verifyJson = await verifyRes.json();
+
+        if (verifyJson.success) {
+          alert("Payment successful and verified!");
+
+          const orders = JSON.parse(localStorage.getItem("orders")) || [];
+          orders.push({
+            id: order.id,
+            amount: order.amount,
+            customer,
+            date: new Date().toISOString(),
+          });
+          localStorage.setItem("orders", JSON.stringify(orders));
+
+          navigate("/success");
+        } else {
+          alert("Payment verification failed.");
+        }
+      },
+      prefill: customer,
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   return (
     <div className="address-container">
-        
-      {/* Back Arrow */}
-      <button
-        onClick={() => navigate('/cart')}
-        style={{
-          background: 'none',
-          border: 'none',
-          fontSize: '24px',
-          cursor: 'pointer',
-          position: 'absolute',
-          top: '20px',
-          left: '20px'
-        }}
-        aria-label="Back to cart"
-      >
-        ⬅
-      </button>
-
-
-      <h2>Delivery Address</h2>
       <form className="address-form">
-        <label>Full Name</label>
-        <input name="name" placeholder="Full Name" onChange={handleChange} />
-        <label>Contact Number</label>
-        <input name="mobile" placeholder="Mobile No" onChange={handleChange} />
-        <label>Email ID</label>
-        <input name="email" placeholder="Gmail ID" onChange={handleChange} />
-        <label>Flat, House No., Building, Company, Apartment</label>
-        <input name="flat" placeholder="Flat, House No., Building, Company, Apartment" onChange={handleChange} />
-        <label>Area, Street, Sector, Village</label>
-        <input name="area" placeholder="Area, Street, Sector, Village" onChange={handleChange} />
-        <label>Landmark</label>
-        <input name="landmark" placeholder="Landmark" onChange={handleChange} />
-        <label>Pincode</label>
-        <input name="pincode" placeholder="Pincode (6 digit)" maxLength="6" onChange={handleChange} />
-        <label>Village/Town/City</label>
-        <input name="city" placeholder="Village/Town/City" onChange={handleChange} />
-        <label>Taluka</label>
-        <input name="taluka" placeholder="Taluka" onChange={handleChange} />
-        <label>District</label>
-        <input name="dist" placeholder="District" onChange={handleChange} />
-        <label>State</label>
-        <input name="state" placeholder="State" onChange={handleChange} />
-        
-       <label
-  style={{
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    marginTop: '20px',
-    fontSize: '16px',
-    cursor: 'pointer'
-  }}
->
-  <input
-    type="checkbox"
-    onChange={() => setShowPayment(!showPayment)}
-    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-  />
-  <span>Proceed to Payment</span>
-</label>
+        <div className="header-row">
+          <button
+            className="back-button"
+            onClick={() => navigate("/cart")}
+            type="button"
+            aria-label="Back to cart"
+          >
+            ⬅
+          </button>
+          <h2>Delivery Address</h2>
+        </div>
+
+        {/* Row 1 */}
+        <div className="grid-2-cols">
+          <div>
+            <Label htmlFor="name" required>
+              Name
+            </Label>
+            <input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="mobile" required>
+              Mobile
+            </Label>
+            <input
+              id="mobile"
+              name="mobile"
+              maxLength={10}
+              value={formData.mobile}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Row 2 */}
+        <div className="grid-2-cols">
+          <div>
+            <Label htmlFor="email" required>
+              Email
+            </Label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="flat">Flat</Label>
+            <input
+              id="flat"
+              name="flat"
+              value={formData.flat}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* Row 3 */}
+        <div className="grid-2-cols">
+          <div>
+            <Label htmlFor="area">
+              Area
+            </Label>
+            <input
+              id="area"
+              name="area"
+              value={formData.area}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="landmark">
+              Landmark
+            </Label>
+            <input
+              id="landmark"
+              name="landmark"
+              value={formData.landmark}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Row 4 */}
+        <div className="grid-3-cols">
+          <div>
+            <Label htmlFor="pincode" required>
+              Pincode
+            </Label>
+            <input
+              id="pincode"
+              name="pincode"
+              maxLength={6}
+              value={formData.pincode}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="city" required>
+              City
+            </Label>
+            <input
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="taluka">Taluka</Label>
+            <input
+              id="taluka"
+              name="taluka"
+              value={formData.taluka}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* Row 5 */}
+        <div className="grid-2-cols">
+          <div>
+            <Label htmlFor="dist">District</Label>
+            <input
+              id="dist"
+              name="dist"
+              value={formData.dist}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Label htmlFor="state" required>
+              State
+            </Label>
+            <input
+              id="state"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Checkbox to show payment section */}
+        <label className="checkbox-container" htmlFor="proceed-payment">
+          <input
+            id="proceed-payment"
+            type="checkbox"
+            checked={showPayment}
+            onClick={(e) => {
+              if (!isFormValid()) {
+                e.preventDefault(); // Stop checkbox from changing
+                alert("Please fill all required fields before proceeding to payment.");
+              }
+            }}
+            onChange={() => setShowPayment(!showPayment)}
+          />
 
 
-
+          Proceed to Payment
+        </label>
       </form>
 
-   {showPayment && (
-  <div className="payment-section">
-    <h3>Payment Summary</h3>
-    <table className="payment-table">
-      <tbody>
-        <tr>
-          <td>Total:</td>
-          <td>₹{totalAmount.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td>GST (18%):</td>
-          <td>₹{gst.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td>Delivery:</td>
-          <td>₹{delivery.toFixed(2)}</td>
-        </tr>
-        <tr className="total-row">
-          <td><strong>Grand Total:</strong></td>
-          <td><strong>₹{grandTotal.toFixed(2)}</strong></td>
-        </tr>
-      </tbody>
-    </table>
+      {showPayment && (
+        <div className="payment-section">
+          <h3>Payment Summary</h3>
+          <table className="payment-table">
+            <tbody>
+              <tr>
+                <td>Total:</td>
+                <td>₹{totalAmount.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td>GST (18%):</td>
+                <td>₹{gst.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td>Delivery:</td>
+                <td>₹{delivery.toFixed(2)}</td>
+              </tr>
+              <tr className="total-row">
+                <td>
+                  <strong>Grand Total:</strong>
+                </td>
+                <td>
+                  <strong>₹{grandTotal.toFixed(2)}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-    <button onClick={handlePayment} className="razorpay-button">
-      Pay ₹{grandTotal.toFixed(2)} Securely
-    </button>
-  </div>
-)}
+          <button onClick={handlePayment} className="razorpay-button">
+            Pay ₹{grandTotal.toFixed(2)} Securely
+          </button>
+        </div>
+      )}
     </div>
   );
 }

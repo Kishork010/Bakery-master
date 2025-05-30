@@ -1,0 +1,28 @@
+.required-star {
+  color: red;
+  margin-left: 4px;
+  font-weight: bold;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,16 +1,49 @@
-.address-container {
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  font-family: sans-serif;
+.address-form {
+  background-color: #f9f9f9;         /* light background */
+  padding: 25px 30px;                /* space inside the box */
+  border-radius: 12px;               /* rounded corners */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* subtle shadow */
+  max-width: 800px;                  /* limit max width */
+  margin: 20px auto;                 /* center horizontally with some vertical margin */
+  transition: all 0.3s ease-in-out;
+  display: grid;                    /* optional for layout */
+  grid-gap: 15px;                   /* spacing between form elements */
 }
 
-.address-form input {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  padding: 10px;
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px; /* row-gap, column-gap */
+  margin-bottom: 20px;
 }
+
+.grid-3-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 30px;
+  margin-bottom: 20px;
+}
+
+/* Label and input stacking inside each grid cell */
+.grid-2-cols > div,
+.grid-3-cols > div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
 
 .payment-section {
   margin-top: 30px;
@@ -88,4 +121,52 @@
   border-top: 2px solid #222;
   font-weight: bold;
   color: #1d4ed8;
+}
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: 30px auto 0;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;    /* Prevent text wrapping */
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center heading horizontally */
+  position: relative;
+  margin-bottom: 20px;
+  padding: 16px 40px; /* increase padding for better look */
+
+}
+
+
+.back-button {
+  position: absolute;
+  left: 0;
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  padding: 0;
+  color: #2bb026;
+  user-select: none;
+}
+
+.header-row h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.required-star {
+  color: red;
+  margin-left: 4px;
+  font-weight: bold;
 }
