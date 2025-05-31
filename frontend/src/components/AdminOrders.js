@@ -6,7 +6,7 @@ function AdminOrders() {
   const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/${showHistory ? 'order-history' : 'orders'}`)
+    fetch(`https://your-backend.onrender.com/${showHistory ? 'order-history' : 'orders'}`)
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error('Error fetching orders:', err));
@@ -16,7 +16,7 @@ function AdminOrders() {
     if (!order) return;
 
     if (status === 'Delivered') {
-      const res = await fetch('http://localhost:5000/update-status', {
+      const res = await fetch('https://your-backend.onrender.com/update-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ order, status }),
@@ -35,7 +35,7 @@ function AdminOrders() {
       const remark = prompt('Enter a remark for cancellation:');
       if (!remark) return;
 
-      const res = await fetch('http://localhost:5000/cancel-order', {
+      const res = await fetch('https://your-backend.onrender.com/cancel-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ order, remark }),
