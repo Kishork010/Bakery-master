@@ -12,7 +12,6 @@ import OpenHoursBanner from './components/OpenHoursBanner';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import BookingForm from './components/BookingForm';
 import Menu from './components/Menu';
 import Cart from './components/Cart';
 import AddressForm from './components/AddressForm';
