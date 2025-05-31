@@ -26,7 +26,7 @@ function Address() {
       customer: { ...address, cart }
     };
 
-    const response = await fetch("http://localhost:5000/complete-order", {
+    const response = await fetch("https://your-backend.onrender.com/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ order, status: "Delivered", remark: "" }),
